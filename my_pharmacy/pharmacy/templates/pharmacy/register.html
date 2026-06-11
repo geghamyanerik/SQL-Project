@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<div class="card">
+    <h1>Register</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="first_name" placeholder="Անուն">
+        <input type="text" name="last_name" placeholder="Ազգանուն">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="number" name="age" placeholder="Տարիք">
+
+        <!-- ՔԱՂԱՔ -->
+        <select name="city">
+            {% for city in cities %}
+                <option value="{{ city.city_id }}">
+                    {{ city.city_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Գրանցվել</button>
+    </form>
+
+    <p>Ունես account → <a href="{% url 'login' %}">Login</a></p>
+</div>

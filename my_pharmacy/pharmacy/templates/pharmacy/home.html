@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Assistant</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#4facfe,#00f2fe);
+        }
+
+        .container{
+            width:500px;
+            background:rgba(255,255,255,0.15);
+            backdrop-filter:blur(15px);
+            padding:40px;
+            border-radius:25px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.2);
+            text-align:center;
+            color:white;
+        }
+
+        h1{
+            margin-bottom:25px;
+            font-size:32px;
+        }
+
+        input{
+            width:100%;
+            padding:15px;
+            border:none;
+            outline:none;
+            border-radius:15px;
+            margin-bottom:15px;
+            font-size:16px;
+        }
+
+        button{
+            width:100%;
+            padding:15px;
+            border:none;
+            border-radius:15px;
+            background:white;
+            color:#2196f3;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        button:hover{
+            transform:translateY(-3px);
+            box-shadow:0 5px 15px rgba(0,0,0,.2);
+        }
+
+        .result{
+            margin-top:30px;
+            text-align:left;
+        }
+
+        .result h2{
+            margin-bottom:15px;
+            text-align:center;
+        }
+
+        .medicine{
+            background:rgba(255,255,255,0.2);
+            padding:12px;
+            margin-bottom:10px;
+            border-radius:12px;
+            list-style:none;
+            transition:.3s;
+        }
+
+        .medicine:hover{
+            background:rgba(255,255,255,0.35);
+            transform:translateX(5px);
+        }
+
+        .logout{
+            position:absolute;
+            top:20px;
+            right:20px;
+            color:white;
+            text-decoration:none;
+            padding:10px 20px;
+            border-radius:25px;
+            background:rgba(255,255,255,0.2);
+            backdrop-filter:blur(10px);
+            transition:.3s;
+        }
+
+        .logout:hover{
+            background:white;
+            color:#2196f3;
+        }
+    </style>
+</head>
+<body>
+
+<a href="{% url 'logout' %}" class="logout">
+    🚪 Logout
+</a>
+
+<div class="container">
+    Բարև {{ first_name }}
+
+    <h1>💊 Pharmacy Assistant</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="symptom"
+            placeholder="Enter your symptom..."
+            required
+        >
+
+        <button type="submit">
+            🔍 Search Medicines
+        </button>
+    </form>
+
+    {% if medicines %}
+    <div class="result">
+
+        <h2>Recommended Medicines</h2>
+
+        <ul>
+            {% for medicine in medicines %}
+                <li class="medicine">
+                    💊 {{ medicine.0 }}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
